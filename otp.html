@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body { 
+  background: url(https://img.freepik.com/free-vector/enter-otp-concept-illustration_114360-7887.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#container{
+    width: 200px;
+    /* border: 2px solid red; */
+    /* justify-content: center;
+    align-items: center; */
+    margin-left: 704px;
+    margin-top: 284px;
+    /* display: flex;
+    flex-direction: column; */
+}
+input{
+    margin: 25px;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+button{
+    padding: 10px;
+    color: white;
+    background-color: aquamarine;
+    text-align: center;
+    font-size: 15px;
+    /* margin-top: 25px; */
+    margin-left: 71px;
+}
+button:hover{
+    color: black;
+    background-color: greenyellow;
+}
+    </style>
+</head>
+<body>
+    <div id="container">
+        <input  id="otp" type="number" placeholder="Enter OTP Here">
+      
+        <button id="btn">Verify OTP</button>
+    </div>  
+</body>
+</html>
+<script>
+    document.querySelector("#btn").addEventListener("click",checkotp)
+    
+    function checkotp(){
+        var input=document.querySelector("#otp").value
+        console.log("inside");
+    if(input=='1234'){
+        alert("Payment Sucessfull")
+    }
+    else{
+        alert("Payment Declined")
+    }
+    }
+    
+</script>

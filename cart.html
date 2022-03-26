@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Page</title>
+    <style>
+      
+         #navbar {
+        display: flex;
+        justify-content: space-around;
+        background-color: teal;
+        padding: 25px;
+      }
+
+      a {
+        text-decoration: none;
+        font-size: 30px;
+        
+      }
+      #navbar a:hover {
+        color: white;
+      }
+      #navbar a {
+        cursor: pointer;
+      }
+      h1{
+          color: rgb(223, 179, 98);
+          font-size: 50px;
+          font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      }
+      #container {
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        gap: 20px;
+      }
+      #container > div{
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        border-radius: 15px;
+        text-align: center;
+        padding: 30px;
+
+      }
+     
+      #container>div>p:nth-child(2){
+          font-size: 20px;
+        }
+        #container>div>p:nth-child(3){
+          font-size: 25px;
+          font-weight: bold;
+        }
+      #butt{
+          border: none;
+          padding: 15px;
+          border-radius: 10px;
+          font-size: 20px;
+          background-color: gold;
+          color: black;
+      }
+
+      #butt:hover{
+        background-color: rgb(235, 44, 44);
+          color: black;
+          cursor: pointer;
+      }
+      #tot{
+          font-size:35px;
+          color: 
+#66a869;
+          /* color: #fb641b; */
+          font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+          font-weight: bold;
+      }
+      #promobtn{
+        border: none;
+          padding: 15px;
+          border-radius: 10px;
+          font-size: 20px;
+          background-color:#fb641b;
+          color: white;
+      }
+      #checkout{
+        border: none;
+          padding: 15px;
+          border-radius: 10px;
+          font-size: 20px;
+          background-color:#3ae966;
+          color: white;
+      }
+      #checkout:hover{
+          cursor: pointer;
+          background-color: rgb(12, 175, 187);
+          color: black;
+
+      }
+      #promobtn:hover{
+          cursor: pointer;
+          background-color: rgb(12, 175, 187);
+          color: black;
+      }
+      input{
+          font-size: 25px;
+          padding: 10px;
+      }
+    </style>
+</head>
+<body>
+    
+    <div id="navbar">
+        <div><a href="mens.html">Men</a></div>
+        <div><a href="women.html">Women</a></div>
+        <div><a href="signup.html">Signup</a></div>
+        <div><a href="login.html">Login</a></div>
+        <div><a href="cart.html">Cart</a></div>
+  
+      </div>
+      <h1>Cart Page</h1>
+      <p id="tot"></p>
+      <input  id="promoinp" type="text" placeholder="Enter Promocode">
+      <br>
+      <br>
+      <button id="promobtn">Apply Promocode</button>
+      <br>
+      <br>
+      <a id="checkout" href="checkout.html">Checkout</a> 
+      <div id="container"></div>
+</body>
+</html>
+
+<script>
+    var cartData = JSON.parse(localStorage.getItem("cart"));
+    console.log(cartData);
+  
+    var total = cartData.reduce(function (sum, elem, index, arr) {
+      return sum + Number(elem.price);
+    }, 0);
+  
+    var length = cartData.length;
+    console.log(length);
+  /*----------------PromoCode***************/
+
+  document.querySelector("#promobtn").addEventListener("click",applypromo)
+ 
+var count=0
+ function applypromo(){
+  var promo=document.querySelector("#promoinp").value
+        // console.log("inside promo"total)
+    if(promo=="masai30" && count==0){
+        total=Math.ceil(total*0.7)
+        alert("Promo Code Applied")
+        count++
+        document.querySelector("p").innerText = ` you have ${length} items in cart and  total is Rs ${total}`;
+        localStorage.setItem("total",total)
+    }
+    else if(promo=="masai30" && count>0){
+        alert("Promo Code Already Used")
+    }else{
+        alert("Invalid PromoCode")
+    }
+ }
+
+
+
+
+
+
+    console.log(total);
+    // total is Rs 16365
+    //`` - template literals
+    localStorage.setItem("total",total)
+    document.querySelector("p").innerText = ` you have ${length} items in cart and  total is Rs ${total}`;
+  
+    cartData.map(function (elem, index) {
+      var box = document.createElement("div");
+  
+      var img = document.createElement("img");
+      img.src = elem.image_url;
+  
+      var name = document.createElement("p");
+      name.textContent = elem.name;
+  
+      var price = document.createElement("p");
+      price.innerText = elem.price;
+
+  
+      var btn = document.createElement("button");
+      btn.innerText = "Remove";
+      btn.setAttribute("id","butt")
+      btn.addEventListener("click", function () {
+        removeItem(elem, index);
+      });
+  
+      box.append(img, name, price, btn);
+  
+      document.querySelector("#container").append(box);
+    });
+  
+    function removeItem(elem, index) {
+      console.log(elem, index);
+      cartData.splice(index, 1);
+      console.log(cartData);
+      localStorage.setItem("cart", JSON.stringify(cartData));
+      window.location.reload();
+    }
+    
+    //    var arr =[1,2,3,4]
+    //    console.log(arr.splice(0,1)) // []
+  </script>
+  
